@@ -72,7 +72,7 @@ EOF
 # Build the wrapper
 #
 
-swift build --package-path $SWIFT_SYNTAX_NAME --arch arm64 --arch x86_64 -c $CONFIGURATION -Xswiftc -enable-library-evolution -Xswiftc -emit-module-interface
+swift build --package-path $SWIFT_SYNTAX_NAME --arch $ARCH -c $CONFIGURATION -Xswiftc -enable-library-evolution -Xswiftc -emit-module-interface
 
 #
 # Create XCFramework

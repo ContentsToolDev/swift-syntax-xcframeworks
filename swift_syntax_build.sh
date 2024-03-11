@@ -114,10 +114,17 @@ MODULES=(
     "$WRAPPER_NAME"
 )
 
-for MODULE in ${MODULES[@]}; do
-    PATH_TO_INTERFACE="${SWIFT_SYNTAX_NAME}/.build/x86_64-apple-macosx/${CONFIGURATION}/${MODULE}.build/${MODULE}.swiftinterface"
-    cp "${PATH_TO_INTERFACE}" "${XCFRAMEWORK_NAME}/macos-${UNIVERSAL_ARCH}"
+for ARCH in ${ARCH_LIST[@]}; do
+    for MODULE in ${MODULES[@]}; do
+        PATH_TO_INTERFACE="${SWIFT_SYNTAX_NAME}/.build/${ARCH}-apple-macosx/${CONFIGURATION}/${MODULE}.build/${MODULE}.swiftinterface"
+        if [ -f "${PATH_TO_INTERFACE}" ]; then
+            cp "${PATH_TO_INTERFACE}" "${XCFRAMEWORK_NAME}/macos-${UNIVERSAL_ARCH}"
+        else
+            echo "Warning: Missing interface for ${MODULE} on ${ARCH}"
+        fi
+    done
 done
+
 
 rm -rf $SWIFT_SYNTAX_NAME
 rm -rf $LIBRARY_NAME
